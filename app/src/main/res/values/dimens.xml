@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_between_view">10dp</dimen>
+    <dimen name="icon_width">25dp</dimen>
+    <dimen name="icon_height">25dp</dimen>
+    <dimen name="side_margin">25dp</dimen>
+</resources>
