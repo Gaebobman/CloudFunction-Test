@@ -4,10 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.lee.cloudfunctiontest.Adapter.NotificationsAdapter
 import com.lee.cloudfunctiontest.DTOs.NotificationDTO
 import com.lee.cloudfunctiontest.databinding.ActivityMainBinding
@@ -61,6 +64,22 @@ class MainActivity : AppCompatActivity() {
                 Log.d(tag, "알림을 읽지 못함")
             }
         initRecycler()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(tag, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+
+            Log.d(tag+ "TOKEN: ", token)
+            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+        })
+
     }
 
     private fun initRecycler() {
